@@ -52,7 +52,7 @@ int main() {
 	for (int i = 0; i < N; i++) {
 		printf("%g\n", hx[i]);
 	}
-
+	
 	return 0;
 }
 
