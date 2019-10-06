@@ -24,6 +24,8 @@ int main() {
 
 	/* allocate CPU memory */
 	hx = (float*) malloc(nbytes);
+	//cudaMalloc((void **)&hx, nbytes);
+
 	if (hx == NULL) {
 		printf("couldn't allocate CPU memory");
 		return -2;
@@ -33,7 +35,7 @@ int main() {
 	printf("hx original: \n");
 	for (int i = 0; i < N; i++) {
 		hx[i] = i;
-		printf("%.1f", hx[i]);
+		printf("%g\n", hx[i]);
 	}
 
 	/* copy data to GPU */
@@ -45,7 +47,11 @@ int main() {
 	/* let GPU finish */
 	cudaThreadSynchronize();
 
-
+	/* copy data from GPU */
+	cudaMemcpy(hx, dx, nbytes, cudaMemcpyDeviceToHost);
+	for (int i = 0; i < N; i++) {
+		printf("%g\n", hx[i]);
+	}
 
 	return 0;
 }
